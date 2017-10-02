@@ -13,15 +13,15 @@ Part 1 is all about defining the *Y Combinator*, so let's do that!
 Here it is in **Javascript**:
 ```javascript
 //yes this is working javascript code, it really works. run "node ./y.js" and see for yourself
-    using = only => functionApplication => (
-        functionApplication(only)),
+using = only => functionApplication => (
+    functionApplication(only)),
 
-    youCan = performRecursionOver => normalCode =>
-        (performRecursionOver(functions => using(functions)(using(normalCode)
-            (normalCode)))),
+youCan = performRecursionOver => normalCode =>
+    (performRecursionOver(functions => using(functions)(using(normalCode)
+        (normalCode)))),
 
-    functions = (doRecursionAnd=doFactorial) => youCan(doRecursionAnd), 
-    just = functions => using(functions())(functions())
+functions = (doRecursionAnd=doFactorial) => youCan(doRecursionAnd), 
+just = functions => using(functions())(functions())
 ```
 
 But here it is really:
@@ -64,7 +64,7 @@ In every other *Y Combinator* articles, the authors attempt to engineer the *Y C
 
 > Ultimately this is the point of the *Y Combinator*. You are able to recurse over *anonymous Functions* and *Lambda Expressions*
 
-The *Y Combinator* is a beautiful piece of code, in that it performs recursion through simple function application. Reread that first sentence until you fully grasp it. It is really that simple conceptually. The implemnetation is the hard part to understand. Once you understand the *implementation* of the **Y Combinator**, other concepts in *Functional Programming* become much simpler to appraoch and dissect, and you can even use the same methods I'm going to use to dissect future *Functional Programming* concepts you may encounter. 
+The *Y Combinator* is a beautiful piece of code, in that it performs recursion through simple function application. Reread that first sentence until you fully grasp it. It is really that simple conceptually. The implemnetation is the hard part to understand. Once you understand the *implementation* of the **Y Combinator**, other concepts in *Functional Programming* become much simpler to approach and dissect, and you can even use the same methods I'm going to use to dissect future *Functional Programming* concepts you may encounter. 
 
 We saw in Part 1 that the *Y Combinator* is simply a functional defintion of recursion. But in **Javascript** recursion is supported out-of-the-box. We all know the basic coding quiz question: **Define recursive factorial in language x**. And we all know that factorial is defined recursively in mathematics as: `!n = n * !(n-1)`, but what happens when we don't know the name of our factorial function? What happens when we need to recurse in **Javascript** on an *anonymous Function* or a *Lambda*?
 
