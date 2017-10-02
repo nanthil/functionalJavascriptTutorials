@@ -1,0 +1,55 @@
+(y => fact(x=> y(y)(x)))is the argument passed to the first function
+Y = f => (function)(argument)
+So Y takes 1 argument and returns an evaluation of a function!
+next simplification:
+(y => func(...)) '...' is a function!
+specifcally '...' is a function that takes 1 argument calls a function, and passes 1 argument to the result
+Y = x => (function)(y=> func(...))
+
+The first function:
+(x => x(x)) is an anonymous function that takes 1 argument
+    this step is only necessary to initialize the infinite loop
+    this is a fundamental idea in lambda calculus, and if you pass a function who calls itself into this function
+    it will create an infinite loop
+
+(y => fact(x => y(y)(x))) is the argument that the first anonymous function takes
+x = (y => fact(x => y(y)(x))) lets call this function "Z"
+
+let Z = (y => fact(x => y(y)(x)))
+
+so we could rewrite the original Y combinator as
+Y = (x => x(x))(Z) which reinforces that (x=>x(x)) is is simply a function that takes one argument. In this instance, Z
+
+Z is a function that takes 1 argument "y", specifically it curries a function because we see a function invocation expression y(y)
+(y => fact(x=>         y(y)        (x))) 
+if "y =>" in our Z function is applied as Z then we have
+Z(Z) = fact(x => Z(Z)(x))
+so any time you see Z(Z) you know that it is === fact(x => Z(Z)(x)), yes including in this line
+fact(x => fact(x=> fact(x=> ))...infinty... (x))
+
+upon completing evaluation from Y(fact) we're left with
+let YFact = Y = f =>    (x => x(x))(y => f(x => y(y)(x)))(fact)
+    YFact = Y = fact => (x => x(x))(y => fact(x=> y(y)(x))) //we'll reduce (y=>fact...) to Z for readability
+    YFact = Y = fact => (x => x(x))(Z)
+    YFact = Y = fact => (Z => Z(Z))
+    YFact = Y = fact => (Z(Z))  // and we know that Z(Z) = fact(x=>Z(Z)(x))
+    YFact = fact(x => Z(Z)(x))
+    
+when we invoke YFact(5) we see that application is as follows
+        fact(x => Z(Z)(x))(5)
+        fact(5 => Z(Z)(5))
+        fact(Z(Z)(5))
+it turns out that fact is a function that takes a function as an argument
+specifically, its first argument curries a function, Z(Z) is a function!
+the function that is returned from applying the curried function takes an integer parameter, the (5)
+We already know that Z(Z) is a function, so fact(x => Z(Z)(x)) Z(Z) is the curried function, and x is the integer!
+
+so now let us reduce fact
+(curry => n => n > 1 ? n * f(n-1) : 1)(Z(Z)(5))
+(Z(Z) => n => n > 1 ? n * Z(Z)(n-1) : 1)(5)
+(5 => 5 > 1 ? 5 * Z(Z)(5-1) : 1)(5)
+(5 > 1 ? 5 * Z(Z)(5-1) : 1) now we can evaluate
+5 is > 1, so return 5 * Z(Z)(4)
+We already know that Z(Z) is a function = fact(x => Z(Z)(x))
+when we invoke fact(x => Z(Z)(x))(4)...
+Recursion!!!!
