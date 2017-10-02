@@ -11,7 +11,20 @@ Part 1 is all about defining the *Y Combinator*, so let's do that!
 > The Y Combinator is the abstract *Functional Programming* definition of recursion
 
 Here it is in **Javascript**:
+```javascript
+//yes this is working javascript code, it really works. run "node ./y.js" and see for yourself
+ using = only => functionApplication => (
+        functionApplication(only)),
 
+    youCan = doAnythingLike => normalCode =>
+        (doAnythingLike(functions => using(functions)(using(normalCode)
+            (normalCode)))),
+
+    functions = (doRecursionAnd=doFactorial) => youCan(doRecursionAnd), 
+    just = functions => using(functions())(functions())
+```
+
+But here it is really:
 **ex. 3-1: The Y Combinator in Javascript**
 ```javascript
 //courtesy of Rosetta Code https://rosettacode.org/wiki/Y_combinator
