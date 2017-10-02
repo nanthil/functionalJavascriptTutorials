@@ -126,7 +126,7 @@ add5(1) = (b => 5 + b)(1)
 ---
 ## I Digress...
 
-What about our nifty *DRY* math problem from *example 2-1*? We still want to pass operators to our *Functions*. To accomplish this we'll be using a little hack. **Javsacript** has this nifty little `eval` *Function* that tranlates a simple text string into executable code. I'm not suggesting this is a best practice by any stretch of the imagination, but it will allow us to implement a simple and extensible example of *Currying*. We want to achieve the following by passing in any arithmetic operator as a string, and wihout repeating ourselves again.
+What about our nifty *DRY* math problem from *example 2-1*? We still want to pass operators to our *Functions*. To accomplish this we'll be using a little hack. **Javsacript** has this nifty little `eval` *Function* that tranlates a simple text string into executable code. ***I'm not suggesting this is a best practice by any stretch of the imagination***, but it will allow us to implement a simple and extensible example of *Currying*. We want to achieve the following by passing in any arithmetic operator as a string, and wihout repeating ourselves again.
 
 **ex. 2-7**
 ```javascript
