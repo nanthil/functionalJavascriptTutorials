@@ -173,7 +173,7 @@ const mathOps = operator => (a, b) => eval(a + operator + b),
 
 //FIRST ->
 //lets reduce mul
-//mul, mathOps('*') andoperator... are all equivalent statements
+//mul, mathOps('*') and operator... the following are all equivalent statements
 mul === mathOps('*') 
 
 mathOps('*') === operator => (a, b) => eval(a + operator + b)('*')
