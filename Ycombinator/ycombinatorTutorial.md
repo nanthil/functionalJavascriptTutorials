@@ -34,12 +34,12 @@ const
             (g=>(f((...x)=>g(g)(...x))))),
 ```
 
-I wasn't following any of this. I had failed out of understanding any number of any number of articles trying to explain the *Y Combinator*, using any number of different languages to explain how it works, to no avail...
+I wasn't following any of this. I had failed out of understanding any number of articles trying to explain the *Y Combinator*, using many different languages to explain how it works, to no avail...
 
 ...then I saw those spread operators `...x` in `ex. 3-2`. An hour later, I understood the *Y Combinator*.
 
 
-In every other *Y Combinator*, the author attempts to engineer the *Y Combinator* from scratch. I'm going to take the exact opposite approach, **we are going to *reverse engineer* the *Y Combinator*.**
+In every other *Y Combinator* articles, the authors attempt to engineer the *Y Combinator* from scratch. I'm going to take the exact opposite approach, **we are going to *reverse engineer* the *Y Combinator*.** Let's *start* with the *Y Combinator* and apply our way to understanding!
 
 ---
 
@@ -48,11 +48,14 @@ In every other *Y Combinator*, the author attempts to engineer the *Y Combinator
 >
 > -Winner of the Internet
 
-The *Y Combinator* is a beautiful piece of code, in that it performs recursion through simple function application. Once you understand this idea, other concepts in *Functional Programming* become much simpler to appraoch and dissect, and you can even use the same methods I'm going to use to dissect future *Functional Programming* concepts you may encounter. This is the most interesting part of the *Y Combinator*, in that it shows the strength of *Functional Programming* concepts, even if the *Y Combinator Function* itself isn't extensively useful in **Javascript** directly. 
+
+> Ultimately this is the point of the *Y Combinator*. You are able to recurse over *anonymous Functions* and *Lambda Expressions*
+
+The *Y Combinator* is a beautiful piece of code, in that it performs recursion through simple function application. Reread that first sentence until you fully grasp it. It is really that simple conceptually. The implemnetation is the hard part to understand. Once you understand the *implementation* of the **Y Combinator**, other concepts in *Functional Programming* become much simpler to appraoch and dissect, and you can even use the same methods I'm going to use to dissect future *Functional Programming* concepts you may encounter. 
 
 We saw in Part 1 that the *Y Combinator* is simply a functional defintion of recursion. But in **Javascript** recursion is supported out-of-the-box. We all know the basic coding quiz question: **Define recursive factorial in language x**. And we all know that factorial is defined recursively in mathematics as: `!n = n * !(n-1)`, but what happens when we don't know the name of our factorial function? What happens when we need to recurse in **Javascript** on an *anonymous Function* or a *Lambda*?
 
-I ran into this question when working on the `curryReduce` function from the *Currying* chapter. 
+I ran into this question when working on the `curryReduce` function from the *Currying* chapter. What is the name of the function `?????`? It doesn't have a name! How can I perform recursion if I don't know the name??????
 
 **ex. 3-3: What is the name of this function?**
 ```javascript
@@ -73,9 +76,7 @@ const curryReduce = mathfn =>
         : total
     }
 ```
-Well, yes... ok, this works just fine, but I'm a software developer, and being a good curious, lazy software developer, I spent hours on the internet to find away to avoid typing `function recurse(...)`
-
-> Ultimately this is the point of the *Y Combinator*. You are able to recurse over *anonymous Functions* and *Lambda Expressions*
+#### Well, yes... ok, I can assign a name to an anonymous function, and this works just fine... But I'm a software developer, and being a good curious, lazy software developer, I spent hours on the internet to find away to avoid typing `function recurse(...)`
 
 ---
 
@@ -84,9 +85,11 @@ Well, yes... ok, this works just fine, but I'm a software developer, and being a
 ## Part 3: *How Combinator*
 
 
-Let's flash back to `3-2` where I said that when I noticed  `...x`, I understood the *Y Combinator* in an hour. I was working on my `curryReduce` function still, and wanted to find out how to use this neat gadget to save a few characters in my code, and learn something new. When I saw `...x`, I realized, this is *just **Javascript***. I know **Javascript**. No number of symbols in a row shall intimidate me! 
+Let's flash back to example `3-2` where I said that when I noticed  `...x`, I understood the *Y Combinator* in an hour. I was working on my `curryReduce` function still, and wanted to find out how to use this neat gadget to save a few characters in my code, and learn something new. When I saw `...x`, I realized, this is *just **Javascript***. I know **Javascript**. No number of symbols in a row shall intimidate me! 
 
-From Rosetta Code, I chose the *minimalist solution*, and a sheet of graph paper. Let's look at the following declartion, and dissect it step by step. 
+From Rosetta Code, I chose the *minimalist solution*, and a sheet of graph paper. Let's look at the following declaration, and dissect it step by step. 
+
+---
 
 **ex. 3-5 The Y Combinator**
 ```javascript
@@ -94,11 +97,11 @@ From Rosetta Code, I chose the *minimalist solution*, and a sheet of graph paper
 const Y = fn => (x => x(x))(y => fn(a => y(y)(a)))
 ```
 
-`Y` is a *Function*. `Y = fn =>` shows us that it is a function that takes an argument. `...fn(...)` shows us that the argument `fn` is a *Function* as well! 
+`Y` is a *Function*. How do we know that? in ES6 we can assign functions using `=>` so anything following the pattern `const functionName = args => ` is afunction:  `Y = fn =>` shows us that it is a function that takes an argument. If we look inside the function, `fn(...)` shows us that the argument `fn` is a *Function* as well! 
 
 > `Y` is a *Currying Function*!!!
 
-We already know how to handle *Currying* a *Function*! First, we need to give `Y` a *Function*!
+We already know how to handle *Currying* a *Function* from Chapter 1! First, we need to give `Y` a *Function*!
 
 **ex. 3-6: Reducing the Y Combinator: Step 1: Curry *`fn`***
 ```javascript
@@ -107,7 +110,7 @@ const recursiveY = Y(someFunction)
 
 //Let's show our work and reduce recursiveY
 
-//pass someFunction to Y
+//apply someFunction to Y, so recursive Y === the result of somefunction applied to Y
 recursiveY === (fn => (x => x(x))(y => fn(a => y(y)(a))))(someFunction)
 
 
@@ -159,7 +162,7 @@ recursiveY === (x => x(x))(y => someFunction(a => y(y)(a))))
 
 >`(x=> x(x))` is a *Function*!!!
 
-This was a real breakthrough for me. When I realized that this statement was a function, I rewrote the whole thing, and replaced it with the word `function x`, signifying a function that takes 1 parameter.
+This was a real breakthrough for me. When I realized that this statement was a function, I rewrote the whole thing, and replaced it with the word `function x`, signifying a function that takes 1 parameter without caring about the implementation of that function.
 
 **ex. 3-10: Reducing the Y Combinator**
 ```javascript
@@ -173,7 +176,7 @@ This was a real breakthrough for me. When I realized that this statement was a f
 ```
 > But if`(x=> x(x))` is a *Function*, and there are parens following it, then it must be an *IIFE*!!!! 
 
-That means that everything in the next set of parens is an argument to the *Function*! Really covering alot of ground this way. Let's repeat the previous step and replace that complex series of arrows and symbos with a simple placeholer:
+That means that everything in the next set of parens is an argument to the *Function*! Really covering alot of ground this way. Let's repeat the previous step and replace everything inside the following parnens, ***the arguments***, the complex series of arrows and symbos with a simple placeholer:
 
 **ex. 3-11: Reducing the Y Combinator**
 ```javascript
@@ -217,6 +220,7 @@ That wasn't so scary, was it? Let's take the next step and resubstitue the real 
 Z === (y => someFunction(a => y(y)(a)))
 
 //Pass Z as arguments
+//Take a moment and chew on this one, this is the hardest step
 Z(Z) === (y => someFunction(a => y(y)(a)))(Z)
 
 //Pass the real value of Z as arguments
@@ -243,9 +247,9 @@ Z(Z) === (y => someFunction(a => y(y)(a)))
 //Apply Z
 (Z => someFunction(a => Z(Z)(a))(y := Z)
 
-//Results: these are all equivalent statements
 someFunction(a => Z(Z)(a))
 
+//Results: these are all equivalent statements
 //equivalent statements
 recursiveY === Z(Z) 
       Z(Z) === someFunction(a => Z(Z)(a))
@@ -264,13 +268,25 @@ const compare = op => (a,b) => op(a,b) ? a : b,
 //after our reduction, we're left with: 
 recursiveY === someFunction(a => Z(Z)(a))
 ```
-`someFunction` is a *Function* like `compare`, and it takes arguments. In the case of our reduced `recursiveY`, `someFunction` must curry a function. In this case, `Z2` is our function being curried, and `a` is the argument being passed to the returned function. 
+`someFunction` is a *Function*, and it takes arguments. It takes 1 argument to be exact. 
+
+It takes a function as an argument. `Z(Z)` returns a function that takes 1 argument, that argument is `a`. The function returned from Z(Z) is `someFunction`!!!!  which takes a 1 argument, a function, and returns a function that accepts 1 argument, that argument is `a`........ etc
+
+What happens if we invoke `someFunction`?
+
+```javascript
+//what will happen here???
+someFunction(a => Z(Z)(a))(5)
+```
+*let's take a look!*
 
 ---
 
 > Now let's define someFunction
 
-We've gone a bout as fur as we kin go in our reduction, so let's define a basic anonymous recursive function for us to use to continue our reduction. We need a *Curried* function to pass to `Y`:
+We've gone a bout as fur as we kin go in our reduction, so let's define a basic anonymous recursive function for us to use to continue our reduction. To define a function that is able to be `y combinator'd`, we need to define a function of the following format: `myFn => fn => arg => baseCase ? /*implement base case*/ : fn(arg)` We need a *Curried* function to pass to `Y`:
+
+Yes, I'm going to use `factorial` just like everyone else. We see that our implementation of `factorial` *Curries* fn, and returns a *Function*:
 
 **ex. 3-16: Define a function to pass into the Y Combinator**
 ```javascript
@@ -280,8 +296,8 @@ const factorial = fn => num =>
     ? num * fn(num-1) 
     : 1
 ```
-Yes, I'm going to use `factorial` just like everyone else. We see that our implementation of `factorial` *Curries* fn, and returns a *Function*:
 
+Let's reduce the factorial function by passing `someFunc` as the first argument:
 **ex. 3-17: Reduction of the factorial function**
 ```javascript
 const factorial = fn => num => 
@@ -299,6 +315,7 @@ factorial(someFunc) === num =>
     ? num * someFunc(num-1) 
     : 1
 ```
+---
 That's simple enough. So what if we were to compose `Y` with `factorial`? Using our reduction of our previous *Y Combinator Function* as a template, we can show our new `factorial` *Function being passed, and reduced. Focus on how this is exactly the same as before, only I swapped the names `recursiveY` with `factorialY` and `someFunction` with `factorial`. 
 
 **ex. 3-17: Reducing `factorialY`**
@@ -313,7 +330,9 @@ const factorialY = Y(factorial)
 
 //STEP 1: ex. 3-6
 factorialY === (x => x(x))(y => factorial(a => y(y)(a))))
-
+```
+Let's use mental simplification and substitution again:
+```javascript
 //STEP 2: ex. 3-12
 factorialY === (x => x(x))(Z)
 factorialY === Z(Z)
@@ -326,8 +345,15 @@ factorialY === Z(Z)
       Z(Z) === factorial(a => Z(Z)(a))
 factorialY === factorial(a => Z(Z)(a))
 ```
-> This is the important part:
-> `factorial(a => Z(Z)(a))`
+# STOP!!!
+## This is the important part:
+## `factorial(a => Z(Z)(a))`
+
+Let's revisit our earlier question. What happens when we invoke `factorial` now? 
+
+```factorial(a => Z(Z)(a))(5)```
+
+---
 
 That last phrase should make a lot of sense to you at this point. If you're struggling following up until now, I recommend taking a break, and coming back and starting from the top when your brain is fully unbended. Either that, or write this reduction step by step on some paper for yourself and see how simple the reduction really is. 
 
