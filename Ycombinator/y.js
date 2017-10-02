@@ -21,8 +21,8 @@
     using = only => functionApplication => (
         functionApplication(only)),
 
-    youCan = doAnythingLike => normalCode =>
-        (doAnythingLike(functions => using(functions)(using(normalCode)
+    youCan = performRecursionOver => normalCode =>
+        (performRecursionOver(functions => using(functions)(using(normalCode)
             (normalCode)))),
 
     functions = (doRecursionAnd=doFactorial) => youCan(doRecursionAnd), 

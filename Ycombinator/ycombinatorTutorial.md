@@ -13,11 +13,11 @@ Part 1 is all about defining the *Y Combinator*, so let's do that!
 Here it is in **Javascript**:
 ```javascript
 //yes this is working javascript code, it really works. run "node ./y.js" and see for yourself
- using = only => functionApplication => (
+    using = only => functionApplication => (
         functionApplication(only)),
 
-    youCan = doAnythingLike => normalCode =>
-        (doAnythingLike(functions => using(functions)(using(normalCode)
+    youCan = performRecursionOver => normalCode =>
+        (performRecursionOver(functions => using(functions)(using(normalCode)
             (normalCode)))),
 
     functions = (doRecursionAnd=doFactorial) => youCan(doRecursionAnd), 
