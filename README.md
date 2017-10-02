@@ -16,6 +16,13 @@ This is the starting point in a series of *Functional Programming* tutorials in 
     - Part 1: Stating the problem
     - Part 2: Solving the problem
     - Part 3: Implementing the Solution
+
+- Chapter 3: *The Y Combinator*
+    - Part 1: *What Combinator* - Defining the Y Combinator
+    - Part 2: *Why Combinator?* - The purpose of the Y Combinator, and why you should learn it
+    - Part 3: *How Combinator?* - Step-by-step explanation of the Y Combinator
+    - Part 4: *Reduce Combinator* - How to apply the Y Combinator to your own functions
+
 ---
 # Chapter 1: The Rules 
 - ### *Rule Number Zero: **Mental Reduction***:

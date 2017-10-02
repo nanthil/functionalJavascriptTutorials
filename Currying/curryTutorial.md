@@ -192,13 +192,15 @@ mul === operator => (a, b) => eval(a + operator + b)('*')
 //final reduction
 (a,b) => eval(a + '*' + b)
 
-//mull takes 2 arguments, because it is a function
+//mul takes 2 arguments, because it is a function
 mul === (a,b) => eval(a + '*' + b)
 ```
 `mathOps` takes 1 argument and returns a *Function*, and `mul` needs 2 arguments to return an evaluated string. 
 
 ```javascript
 //Let's use our mul function
+mul(3,4)
+
 mul(3,4) === (a,b) => eval(a + '*' + b)(3,4)
 
 //mul(3,4) === the following statment
@@ -230,9 +232,9 @@ const mathOps = (operator) => (a, b) => eval(a + operator + b),
       either = mathOps('||'), 
       lt     = mathOps('<'), 
       gt     = mathOps('>'), 
-      eq     = mathOps('==='),
       lte    = (a,b) => !gt(a,b), 
       gte    = (a,b) => !lt(a,b), 
+      eq     = mathOps('==='),
       lbs    = mathOps('<<'), //bitwise operators << >> | & ^ 
       rbs    = mathOps('>>'), 
       bor    = mathOps('|'), 
@@ -240,7 +242,7 @@ const mathOps = (operator) => (a, b) => eval(a + operator + b),
       band   = mathOps('&'), 
 ```
 
-This is so much easier to read than the stack of functions from the top of this page, and to understand what is happening. One look at `mathOps` and you can reason about what `mul`, `sum`, etc are doing.
+This is so much easier to read and to understand than the example from the beginning of this chapter. One look at `mathOps` and you can reason about what `mul`, `sum`, etc are doing.And with `lte and gte` you can see that the're easily extended into other functions.
 
 Let's create some helper functions with our new math functions
 ```javascript
